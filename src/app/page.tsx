@@ -10,7 +10,8 @@ import {
   Clock, Globe, Shield, Zap, Leaf, Settings,
   MessageCircle, Award, BarChart3, UserCheck, Calendar,
   Instagram, Linkedin, Mail, Phone, MapPin, Camera,
-  Handshake
+  Handshake,
+  Icon
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -39,6 +40,7 @@ export default function Home() {
   const whyChooseUsScrollerRef = useRef<HTMLDivElement | null>(null)
   const advantagesScrollerRef = useRef<HTMLDivElement>(null)
   const testimonialsScrollerRef = useRef<HTMLDivElement>(null)
+  const happyClientsScrollerRef = useRef<HTMLDivElement | null>(null)
 
   // ✅ Safe auto-scroll setup
   useEffect(() => {
@@ -101,6 +103,7 @@ export default function Home() {
     const cleanupHowItWorks = setupAutoScroll(howItWorksScrollerRef, 0.3)
     const cleanupWhatIsTapNDine = setupAutoScroll(whatIsTapNDineScrollerRef, 0.4)
     const cleanupWhyChooseUs = setupAutoScroll(whyChooseUsScrollerRef, 0.3)
+    const cleanupHappyClients = setupAutoScroll(happyClientsScrollerRef, 0.4)
 
     // Cleanup on unmount
     return () => {
@@ -108,13 +111,14 @@ export default function Home() {
       cleanupHowItWorks?.()
       cleanupWhatIsTapNDine?.()
       cleanupWhyChooseUs?.()
+      cleanupHappyClients?.()
     }
   }, [])
 
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'features', 'pricing', 'testimonials', 'addons', 'faqs', 'contact']
+      const sections = ['home', 'features', 'pricing', 'testimonials', 'faqs', 'contact']
       const scrollPosition = window.scrollY + 100
 
       for (const section of sections) {
@@ -142,7 +146,7 @@ export default function Home() {
   }
 
   const openWhatsApp = () => {
-    window.open('https://wa.me/916351324531?text=I%20am%20interested%20and%20would%20like%20to%20see%20some%20demos.', '_blank')
+    window.open('https://wa.me/916351324531?text=Hi!%20I%20came%20across%20Tap-n-Dine%20and%20I%E2%80%99m%20interested%20in%20learning%20more%20about%20how%20it%20works%20for%20restaurants.%20Could%20you%20please%20share%20a%20quick%20demo%20or%20pricing%20details%3F', '_blank')
   }
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -169,7 +173,6 @@ export default function Home() {
     { id: 'features', label: 'Features' },
     { id: 'pricing', label: 'Pricing' },
     { id: 'testimonials', label: 'Testimonials' },
-    { id: 'addons', label: 'Add-Ons' },
     { id: 'faqs', label: 'FAQs' },
     { id: 'contact', label: 'Contact' }
   ]
@@ -182,10 +185,19 @@ export default function Home() {
     { icon: Hotel, name: 'Hotels', caption: 'Room service. Revolutionized.' }
   ]
 
+  const happyClients = [
+    { name: 'Raj Rajeshwari', image: '/rajrajeshwari.jpg' },
+    { name: 'Hungry Birds', image: '/hungry_birds.avif' },
+    { name: 'Gravy & Grills', image: '/gravy.jpg' },
+    { name: 'Jagdamba', image: '/jagdamba.png' },
+    { name: 'Mahi Omlette & Chinese', image: '/mahi.png' },
+    { name: 'Nanking', image: '/nanking.png' },
+  ]
+
   const howItWorks = [
     { step: '1', title: 'Scan', description: 'Customers scan QR code at their table', icon: QrCode },
     { step: '2', title: 'Explore Menu', description: 'Browse menu with photos and descriptions', icon: Smartphone },
-    { step: '3', title: 'Order & Pay', description: 'Place order and pay securely online', icon: CreditCard }
+    { step: '3', title: 'Order & Enjoy', description: 'Place your order and enjoy your food', icon: CreditCard }
   ]
 
   const pricingPlans = [
@@ -202,7 +214,7 @@ export default function Home() {
         'Mobile-first, fast-loading UI',
         'Annual hosting included',
         '6 permanent QR codes',
-        'Go live within 2 hours'
+        'Go live within 24 hours'
       ],
       popular: false
     },
@@ -252,63 +264,44 @@ export default function Home() {
 
   const testimonials = [
     {
-      name: 'Priya Sharma',
-      role: 'Regular Customer, Gravy & Grills',
+      name: 'Alpesh Amin',
+      role: 'Owner of Hungry Birds',
       content: 'Loved scanning the QR and ordering in seconds — super smooth experience!',
       rating: 5
     },
     {
-      name: 'Rahul Mehta',
-      role: 'Customer, The Spice Garden',
+      name: 'Mihir Shah',
+      role: 'Owner off Shree RajRajeshwari',
       content: 'No more waiting for staff. I can browse and order at my own pace. Brilliant!',
       rating: 5
     },
     {
-      name: 'Anjali Patel',
-      role: 'Diner, Café Bliss',
+      name: 'Hitesh Patel',
+      role: 'Owner of NanKing',
       content: 'The photos and descriptions make choosing so much easier. Great UX!',
       rating: 5
     },
-    
+    {
+      name: 'Rishabh Patel',
+      role: 'Owner of Mahi Omlette',
+      content: "Seamless and quick! The digital menu made dining effortless and fun.",
+      rating: 5
+    },
+    {
+      name: 'Ayush Rana',
+      role: 'Owner of Jagdamba Chevda',
+      content: "Tap-n-Dine has transformed how we serve customers — fast, easy, and completely hassle-free!",
+      rating: 5
+    }
+
   ]
 
-  const addons = [
-    {
-      name: 'WhatsApp Integration',
-      description: 'Send order updates via WhatsApp',
-      icon: MessageCircle,
-      plans: { Basic: false, Pro: true, Ultra: true }
-    },
-    {
-      name: 'Loyalty Rewards',
-      description: 'Customer loyalty program',
-      icon: Award,
-      plans: { Basic: false, Pro: false, Ultra: true }
-    },
-    {
-      name: 'Analytics Dashboard',
-      description: 'Advanced sales analytics',
-      icon: BarChart3,
-      plans: { Basic: false, Pro: true, Ultra: true }
-    },
-    {
-      name: 'Staff App',
-      description: 'Order management for staff',
-      icon: UserCheck,
-      plans: { Basic: false, Pro: true, Ultra: true }
-    },
-    {
-      name: 'Table Booking',
-      description: 'Online reservation system',
-      icon: Calendar,
-      plans: { Basic: false, Pro: false, Ultra: true }
-    }
-  ]
+
 
   const faqs = [
     {
       question: 'How quickly can I set up Tap-n-Dine?',
-      answer: 'You can go live within 2 hours! Simply sign up, provide your menu details, and we\'ll handle the rest.'
+      answer: 'You can go live within 24 hours! Simply sign up, provide your menu details, and we\'ll handle the rest.'
     },
     {
       question: 'What payment methods are supported?',
@@ -354,13 +347,38 @@ export default function Home() {
       {/* Mobile-First Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b" style={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', borderColor: 'var(--border)' }}>
         <div className="responsive-container">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'var(--lazlle-text-dark)' }}>
-                <QrCode className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-lg" style={{ color: 'var(--lazlle-text-gray)' }}>Lazlle</span>
-              <Badge variant="secondary" className="text-xs" style={{ color: 'var(--lazlle-text-medium)' }}>Tap-n-Dine</Badge>
+              <div
+                    className="w-40 h-40 rounded-lg flex items-center justify-center"
+                  >
+                    <img
+                      src="/laz.jpg"
+                      alt="QR Code"
+                      className="w-20 h-20 object-contain"
+                    />
+                  </div>
+              <span
+                  className="font-bold"
+                  style={{
+                    color: 'var(--lazlle-text-black)',
+                    fontSize: '38px'
+                  }}
+                >
+                  Lazlle
+                </span>
+
+                <Badge
+                  variant="secondary"
+                  style={{
+                    color: 'var(--lazlle-text-medium  )',
+                    fontSize: '22px',
+                    padding: '4px 8px'
+                  }}
+                >
+                  Tap-n-Dine
+                </Badge>
+
             </div>
 
             <button
@@ -411,19 +429,16 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <Badge 
+            <Badge
               className="mb-4"
               style={{
-                backgroundColor: 'var(--lazlle-bg-light)', 
-                color: 'var(--lazlle-text-dark)', 
-                fontSize: '1.5rem', // increase size
+                backgroundColor: 'var(--lazlle-bg-light)',
+                color: 'var(--lazlle-text-dark)',
+                fontSize: '1.5rem',
                 fontWeight: '600',
-                verticalAlign: 'middle',
-                alignSelf: 'center',
-                display: 'inline-block',
               }}
             >
-            🚀 Digital QR Ordering System
+              System for Digital Ordering Via QR Code
             </Badge>
             <h1 className="responsive-heading">
               Revolutionize Your
@@ -503,7 +518,6 @@ export default function Home() {
                   { title: 'Digital Menu', desc: 'Interactive menu with photos', icon: Smartphone },
                   { title: 'QR Code', desc: 'Scan to order instantly', icon: QrCode },
                   { title: 'Real-time Updates', desc: 'Live order tracking', icon: Zap },
-                  { title: 'Analytics', desc: 'Customer insights', icon: BarChart3 },
                   { title: 'Seamless Ordering', desc: 'Smooth ordering experience for every table', icon: Handshake },
                   { title: 'Easy Management', desc: 'Manage menu and orders effortlessly', icon: Settings }
                 ].map((item, index) => (
@@ -574,8 +588,50 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works Section */}
+      {/* Happy Clients Section */}
       <section style={{ backgroundColor: '#ffffff' }}>
+        <div className="responsive-section">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="responsive-heading">Happy Clients 😊</h2>
+            <p className="responsive-text mx-auto">
+              Trusted by the best in the business
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div 
+              ref={happyClientsScrollerRef}
+              className="business-types-auto-scroll-container pb-4"
+            >
+              <div className="flex space-x-4" style={{ width: 'max-content' }}>
+                {happyClients.map((client, index) => (
+                  <div key={client.name} className="flex-shrink-0 w-72">
+                    <div className="section-card h-full">
+                      <div className="text-center">
+                        <div className="w-full h-40 rounded-lg flex items-center justify-center mx-auto mb-4 overflow-hidden">
+                          <img src={client.image} alt={client.name} className="w-full h-full object-contain" />
+                        </div>                        <h3 className="responsive-subheading mb-3">{client.name}</h3>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section>
         <div className="responsive-section">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -735,8 +791,8 @@ export default function Home() {
                     <tr className="border-b hover:bg-gray-50 transition-colors">
                       <td className="py-4 px-4 font-medium text-gray-900">Menu Editing</td>
                       <td className="text-center py-4 px-4 text-gray-600">Developer Only</td>
-                      <td className="text-center py-4 px-4 text-gray-600">Self Service</td>
-                      <td className="text-center py-4 px-4 text-gray-600">Self Service</td>
+                      <td className="text-center py-4 px-4 text-gray-600">Attended by oneself</td>
+                      <td className="text-center py-4 px-4 text-gray-600">Attended by oneself</td>
                     </tr>
                     <tr className="border-b hover:bg-gray-50 transition-colors">
                       <td className="py-4 px-4 font-medium text-gray-900">QR Codes</td>
@@ -765,7 +821,7 @@ export default function Home() {
                     <tr className="hover:bg-gray-50 transition-colors">
                       <td className="py-4 px-4 font-medium text-gray-900">Priority Support</td>
                       <td className="text-center py-4 px-4 crossmark">❌</td>
-                      <td className="text-center py-4 px-4 text-orange-500 font-bold">⚡</td>
+                      <td className="text-center py-4 px-4 text-orange-500 font-bold">❌</td>
                       <td className="text-center py-4 px-4 checkmark">✅</td>
                     </tr>
                   </tbody>
@@ -926,112 +982,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Add-Ons Section */}
-      <section id="addons">
-        <div className="responsive-section">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="responsive-heading">Add-Ons & Integrations</h2>
-            <p className="responsive-text mx-auto">
-              Enhance your experience with powerful add-ons
-            </p>
-          </motion.div>
 
-          <div className="addons-grid mb-16">
-            {addons.map((addon, index) => (
-              <motion.div
-                key={addon.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="h-full"
-              >
-                <div className="section-card h-full">
-                  <div className="text-center">
-                    <div className="icon-container mx-auto mb-4">
-                      <addon.icon className="w-6 h-6 md:w-7 md:h-7" />
-                    </div>
-                    <h3 className="responsive-subheading mb-3">{addon.name}</h3>
-                    <p className="fluid-text-small text-gray-600 mb-6">{addon.description}</p>
-                    <div className="flex flex-wrap justify-center gap-2">
-                      <Badge variant={addon.plans.Basic ? 'default' : 'secondary'} className="text-xs">
-                        Basic {addon.plans.Basic ? '✓' : '✗'}
-                      </Badge>
-                      <Badge variant={addon.plans.Pro ? 'default' : 'secondary'} className="text-xs">
-                        Pro {addon.plans.Pro ? '✓' : '✗'}
-                      </Badge>
-                      <Badge variant={addon.plans.Ultra ? 'default' : 'secondary'} className="text-xs">
-                        Ultra {addon.plans.Ultra ? '✓' : '✗'}
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Add-ons Comparison Table */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="section-card">
-              <h3 className="responsive-subheading text-center mb-8">Add-Ons Comparison</h3>
-              <div className="comparison-table-responsive">
-                <div className="scroll-indicator-top">
-                  <div className="scroll-hint">← Scroll to see more →</div>
-                </div>
-                <div className="table-container-horizontal">
-                  <table className="w-full">
-                    <thead className="sticky-header">
-                      <tr>
-                        <th className="text-left py-4 px-4 font-semibold text-gray-900 min-w-[180px]">Add-On</th>
-                        <th className="text-center py-4 px-4 font-semibold text-gray-900 min-w-[100px]">Basic</th>
-                        <th className="text-center py-4 px-4 font-semibold">Pro</th>
-                        <th className="text-center py-4 px-4 font-semibold text-gray-900 min-w-[100px]">Ultra</th>
-                      </tr>
-                    </thead>
-                  <tbody>
-                    {addons.map((addon) => (
-                      <tr key={addon.name} className="hover:bg-gray-50 transition-colors">
-                        <td className="py-4 px-4 font-medium text-gray-900">{addon.name}</td>
-                        <td className="py-4 px-4 text-center">
-                          {addon.plans.Basic ? (
-                            <span className="checkmark">✅</span>
-                          ) : (
-                            <span className="crossmark">❌</span>
-                          )}
-                        </td>
-                        <td className="py-4 px-4 text-center">
-                          {addon.plans.Pro ? (
-                            <span className="checkmark">✅</span>
-                          ) : (
-                            <span className="crossmark">❌</span>
-                          )}
-                        </td>
-                        <td className="py-4 px-4 text-center">
-                          {addon.plans.Ultra ? (
-                            <span className="checkmark">✅</span>
-                          ) : (
-                            <span className="crossmark">❌</span>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* FAQs Section */}
       <section id="faqs" className="bg-gray-50">
