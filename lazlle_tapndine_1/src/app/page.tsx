@@ -33,27 +33,31 @@ export default function Home() {
   const menuScrollerRef = useRef<HTMLDivElement>(null)
   const businessTypesScrollerRef = useRef<HTMLDivElement>(null)
   const howItWorksScrollerRef = useRef<HTMLDivElement>(null)
+  const whatIsTapNDineScrollerRef = useRef<HTMLDivElement>(null)
+  const whyChooseUsScrollerRef = useRef<HTMLDivElement>(null)
   const advantagesScrollerRef = useRef<HTMLDivElement>(null)
   const testimonialsScrollerRef = useRef<HTMLDivElement>(null)
 
   // Auto-scroll functionality with pause on hover/tap
-  useEffect(() => {
-    const setupAutoScroll = (ref: React.RefObject<HTMLDivElement>, speed: number = 1) => {
-      if (!ref.current) return
-      
+    useEffect(() => {
+    // Fixed type signature: allow HTMLDivElement | null
+    const setupAutoScroll = (
+      ref: React.RefObject<HTMLDivElement | null>,
+      speed: number = 1
+    ): (() => void) | undefined => {
       const scroller = ref.current
+      if (!scroller) return
+
       let scrollAmount = 0
       const scrollStep = 1
-      const scrollDelay = 30 / speed
+      const scrollDelay = 5 / speed
       let isPaused = false
       let intervalId: NodeJS.Timeout | null = null
 
       const scroll = () => {
         if (!scroller || isPaused) return
-        
         scroller.scrollLeft += scrollStep
         scrollAmount += scrollStep
-        
         if (scrollAmount >= scroller.scrollWidth - scroller.clientWidth) {
           scrollAmount = 0
           scroller.scrollLeft = 0
@@ -75,16 +79,13 @@ export default function Home() {
         startScrolling()
       }
 
-      // Mouse events
       scroller.addEventListener('mouseenter', pauseScrolling)
       scroller.addEventListener('mouseleave', resumeScrolling)
-      
-      // Touch events
       scroller.addEventListener('touchstart', pauseScrolling)
       scroller.addEventListener('touchend', resumeScrolling)
 
       startScrolling()
-      
+
       return () => {
         if (intervalId) clearInterval(intervalId)
         scroller.removeEventListener('mouseenter', pauseScrolling)
@@ -94,14 +95,20 @@ export default function Home() {
       }
     }
 
+    // ✅ Now these lines are type-safe
     const cleanupBusinessTypes = setupAutoScroll(businessTypesScrollerRef, 0.4)
     const cleanupHowItWorks = setupAutoScroll(howItWorksScrollerRef, 0.3)
+    const cleanupWhatIsTapNDine = setupAutoScroll(whatIsTapNDineScrollerRef, 0.4)
+    const cleanupWhyChooseUs = setupAutoScroll(whyChooseUsScrollerRef, 0.3)
 
     return () => {
       cleanupBusinessTypes?.()
       cleanupHowItWorks?.()
+      cleanupWhatIsTapNDine?.()
+      cleanupWhyChooseUs?.()
     }
   }, [])
+
 
   useEffect(() => {
     const handleScroll = () => {

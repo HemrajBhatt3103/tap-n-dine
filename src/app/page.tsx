@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { 
@@ -30,80 +31,86 @@ export default function Home() {
     message: ''
   })
 
-  // Auto-scroll refs
+  // Refs for sections
   const menuScrollerRef = useRef<HTMLDivElement>(null)
-  const businessTypesScrollerRef = useRef<HTMLDivElement>(null)
-  const howItWorksScrollerRef = useRef<HTMLDivElement>(null)
+  const businessTypesScrollerRef = useRef<HTMLDivElement | null>(null)
+  const howItWorksScrollerRef = useRef<HTMLDivElement | null>(null)
+  const whatIsTapNDineScrollerRef = useRef<HTMLDivElement | null>(null)
+  const whyChooseUsScrollerRef = useRef<HTMLDivElement | null>(null)
   const advantagesScrollerRef = useRef<HTMLDivElement>(null)
   const testimonialsScrollerRef = useRef<HTMLDivElement>(null)
-  const whatIsTapNDineScrollerRef = useRef<HTMLDivElement>(null)
-  const whyChooseUsScrollerRef = useRef<HTMLDivElement>(null)
 
-  // Auto-scroll functionality with pause on hover/tap
+  // ✅ Safe auto-scroll setup
   useEffect(() => {
-  const setupAutoScroll = (ref: React.RefObject<HTMLDivElement | null>, speed: number = 1) => {
-    if (!ref.current) return;
-    
-    const scroller = ref.current;
-    let scrollAmount = 0;
-    const scrollStep = 1;
-    const scrollDelay = 5 / speed;
-    let isPaused = false;
-    let intervalId: NodeJS.Timeout | null = null;
+    const setupAutoScroll = (
+      ref: React.RefObject<HTMLDivElement | null | undefined>,
+      speed: number = 1
+    ): (() => void) | undefined => {
+      const scroller = ref.current
+      if (!scroller) return
 
-    const scroll = () => {
-      if (!scroller || isPaused) return;
-      scroller.scrollLeft += scrollStep;
-      scrollAmount += scrollStep;
-      if (scrollAmount >= scroller.scrollWidth - scroller.clientWidth) {
-        scrollAmount = 0;
-        scroller.scrollLeft = 0;
+      let scrollAmount = 0
+      const scrollStep = 1
+      const scrollDelay = 5 / speed
+      let isPaused = false
+      let intervalId: NodeJS.Timeout | null = null
+
+      const scroll = () => {
+        if (!scroller || isPaused) return
+        scroller.scrollLeft += scrollStep
+        scrollAmount += scrollStep
+        if (scrollAmount >= scroller.scrollWidth - scroller.clientWidth) {
+          scrollAmount = 0
+          scroller.scrollLeft = 0
+        }
       }
-    };
 
-    const startScrolling = () => {
-      if (intervalId) clearInterval(intervalId);
-      intervalId = setInterval(scroll, scrollDelay);
-    };
+      const startScrolling = () => {
+        if (intervalId) clearInterval(intervalId)
+        intervalId = setInterval(scroll, scrollDelay)
+      }
 
-    const pauseScrolling = () => {
-      isPaused = true;
-      if (intervalId) clearInterval(intervalId);
-    };
+      const pauseScrolling = () => {
+        isPaused = true
+        if (intervalId) clearInterval(intervalId)
+      }
 
-    const resumeScrolling = () => {
-      isPaused = false;
-      startScrolling();
-    };
+      const resumeScrolling = () => {
+        isPaused = false
+        startScrolling()
+      }
 
-    scroller.addEventListener('mouseenter', pauseScrolling);
-    scroller.addEventListener('mouseleave', resumeScrolling);
-    scroller.addEventListener('touchstart', pauseScrolling);
-    scroller.addEventListener('touchend', resumeScrolling);
+      scroller.addEventListener('mouseenter', pauseScrolling)
+      scroller.addEventListener('mouseleave', resumeScrolling)
+      scroller.addEventListener('touchstart', pauseScrolling)
+      scroller.addEventListener('touchend', resumeScrolling)
 
-    startScrolling();
+      startScrolling()
 
+      return () => {
+        if (intervalId) clearInterval(intervalId)
+        scroller.removeEventListener('mouseenter', pauseScrolling)
+        scroller.removeEventListener('mouseleave', resumeScrolling)
+        scroller.removeEventListener('touchstart', pauseScrolling)
+        scroller.removeEventListener('touchend', resumeScrolling)
+      }
+    }
+
+    // Initialize autoscrolls
+    const cleanupBusinessTypes = setupAutoScroll(businessTypesScrollerRef, 0.4)
+    const cleanupHowItWorks = setupAutoScroll(howItWorksScrollerRef, 0.3)
+    const cleanupWhatIsTapNDine = setupAutoScroll(whatIsTapNDineScrollerRef, 0.4)
+    const cleanupWhyChooseUs = setupAutoScroll(whyChooseUsScrollerRef, 0.3)
+
+    // Cleanup on unmount
     return () => {
-      if (intervalId) clearInterval(intervalId);
-      scroller.removeEventListener('mouseenter', pauseScrolling);
-      scroller.removeEventListener('mouseleave', resumeScrolling);
-      scroller.removeEventListener('touchstart', pauseScrolling);
-      scroller.removeEventListener('touchend', resumeScrolling);
-    };
-  };
+      cleanupBusinessTypes?.()
+      cleanupHowItWorks?.()
+      cleanupWhatIsTapNDine?.()
+      cleanupWhyChooseUs?.()
+    }
+  }, [])
 
-  const cleanupBusinessTypes = setupAutoScroll(businessTypesScrollerRef, 0.3);
-  const cleanupHowItWorks = setupAutoScroll(howItWorksScrollerRef, 0.2);
-  const cleanupWhatIsTapNDine = setupAutoScroll(whatIsTapNDineScrollerRef, 0.4);
-  const cleanupWhyChooseUs = setupAutoScroll(whyChooseUsScrollerRef, 0.3);
-
-  return () => {
-    cleanupBusinessTypes?.();
-    cleanupHowItWorks?.();
-    cleanupWhatIsTapNDine?.();
-    cleanupWhyChooseUs?.();
-  };
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
