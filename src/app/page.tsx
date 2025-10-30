@@ -343,46 +343,68 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: 'var(--lazlle-bg-light)', color: 'var(--lazlle-text-dark)' }}>
-      {/* Mobile-First Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b" style={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', borderColor: 'var(--border)' }}>
-        <div className="responsive-container">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center space-x-2">
-              <div
-                    className="w-40 h-40 rounded-lg flex items-center justify-center"
-                  >
-                    <img
-                      src="/laz.jpg"
-                      alt="QR Code"
-                      className="w-20 h-20 object-contain"
-                    />
-                  </div>
-              <span
-                  className="font-bold"
-                  style={{
-                    color: 'var(--lazlle-text-black)',
-                    fontSize: '38px'
-                  }}
-                >
-                  Lazlle
-                </span>
+    <div
+  className="min-h-screen overflow-x-hidden"
+  style={{ backgroundColor: 'var(--lazlle-bg-light)', color: 'var(--lazlle-text-dark)' }}
+>
+  {/* Mobile-First Navigation */}
+  <nav
+    className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b"
+    style={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', borderColor: 'var(--border)' }}
+  >
+    <div className="responsive-container">
+      <div className="flex justify-between items-center h-20">
+        <div className="flex items-center">
+          <img
+            src="/laz.jpg"
+            alt="Lazlle Logo"
+            className="w-10 h-10 md:w-16 md:h-16 object-contain mr-2"
+          />
+          <div className="flex flex-row items-center space-x-2">
+            <span
+              style={{
+                color: 'var(--lazlle-text-black)',
+                fontFamily: "'Montserrat', sans-serif",
+                fontWeight: 600,
+                fontSize: '22px',
+                letterSpacing: '0.4px',
+              }}
+            >
+              Lazlle
+            </span>
+            <Badge
+              variant="secondary"
+              className="text-xs md:text-base"
+              style={{
+                color: 'var(--lazlle-text-medium)',
+                fontFamily: "'Montserrat', sans-serif",
+                padding: '0px 2px ',
+                fontSize: '12px',
+              }}
+            >
+              Tap-n-Dine
+            </Badge>
+          </div>
+        </div>
 
-                <Badge
-                  variant="secondary"
-                  style={{
-                    color: 'var(--lazlle-text-medium  )',
-                    fontSize: '22px',
-                    padding: '4px 8px'
-                  }}
-                >
-                  Tap-n-Dine
-                </Badge>
-
-            </div>
+        <div className="hidden md:flex items-center space-x-8">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`text-sm font-medium transition-colors ${
+                activeSection === item.id
+                  ? 'text-orange-500'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
 
             <button
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -430,12 +452,14 @@ export default function Home() {
             className="text-center"
           >
             <Badge
-              className="mb-4"
+              className="mb-4 max-w-sm"
               style={{
                 backgroundColor: 'var(--lazlle-bg-light)',
                 color: 'var(--lazlle-text-dark)',
                 fontSize: '1.5rem',
                 fontWeight: '600',
+                whiteSpace: 'normal',   
+                lineHeight: '1.4',
               }}
             >
               System for Digital Ordering Via QR Code
@@ -597,7 +621,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="responsive-heading">Happy Clients 😊</h2>
+            <h2 className="responsive-heading">Happy Clients</h2>
             <p className="responsive-text mx-auto">
               Trusted by the best in the business
             </p>
@@ -790,9 +814,9 @@ export default function Home() {
                   <tbody>
                     <tr className="border-b hover:bg-gray-50 transition-colors">
                       <td className="py-4 px-4 font-medium text-gray-900">Menu Editing</td>
-                      <td className="text-center py-4 px-4 text-gray-600">Developer Only</td>
-                      <td className="text-center py-4 px-4 text-gray-600">Attended by oneself</td>
-                      <td className="text-center py-4 px-4 text-gray-600">Attended by oneself</td>
+                      <td className="text-center py-4 px-4 text-gray-600">Unlimited edits</td>
+                      <td className="text-center py-4 px-4 text-gray-600">Unlimited edits</td>
+                      <td className="text-center py-4 px-4 text-gray-600">Unlimited edits</td>
                     </tr>
                     <tr className="border-b hover:bg-gray-50 transition-colors">
                       <td className="py-4 px-4 font-medium text-gray-900">QR Codes</td>
