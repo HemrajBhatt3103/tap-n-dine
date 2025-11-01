@@ -205,8 +205,8 @@ export default function Home() {
       name: 'BASIC',
       color: 'orange',
       pricing: {
-        '6 months': '₹2,199',
-        '12 months': '₹3,199'
+        '6 months': '₹3,199',
+        '12 months': '₹4,199'
       },
       features: [
         'Unlimited menu edits by developer',
@@ -222,8 +222,8 @@ export default function Home() {
       name: 'PRO',
       color: 'blue',
       pricing: {
-        '6 months': '₹3,499',
-        '12 months': '₹4,999'
+        '6 months': '₹3,199',
+        '12 months': '₹4,199'
       },
       features: [
         'All Basic features',
@@ -239,8 +239,8 @@ export default function Home() {
       name: 'ULTRA',
       color: 'purple',
       pricing: {
-        '6 months': '₹5,499 for 1st outlet (₹999/outlet)',
-        '12 months': '₹7,299 for 1st outlet (₹1,499/outlet)'
+        '6 months': '₹6,499 for 1st outlet (₹999/outlet)',
+        '12 months': '₹8,499 for 1st outlet (₹1,999/outlet)'
       },
       features: [
         'All Pro features + multi-outlet dashboard',
