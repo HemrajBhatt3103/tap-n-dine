@@ -219,11 +219,11 @@ export default function Home() {
       popular: false
     },
     {
-      name: 'PRO',
+      name: 'Professional',
       color: 'blue',
       pricing: {
-        '6 months': '₹3,199',
-        '12 months': '₹4,199'
+        '6 months': '₹4,499',
+        '12 months': '₹5,499'
       },
       features: [
         'All Basic features',
@@ -236,7 +236,7 @@ export default function Home() {
       popular: true
     },
     {
-      name: 'ULTRA',
+      name: 'Enterprise',
       color: 'purple',
       pricing: {
         '6 months': '₹6,499 for 1st outlet (₹999/outlet)',
